@@ -4,9 +4,14 @@ var cors = require("cors");
 mongoose.connect('mongodb://localhost/jetbrains');
 var bodyParser = require("body-parser");
 
+
+// The Application
 var app = express();
-app.use(cors());
-app.use(bodyParser());
+
+
+// Necessary Middleware for the REST API.
+app.use(cors()); // Allows for Cross Origin R Something requests.
+app.use(bodyParser()); // Allows for JSON parsing
 
 
 

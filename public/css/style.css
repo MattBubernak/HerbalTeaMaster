@@ -1,0 +1,21 @@
+.jumbotron{
+     background: url('../img/bg_test.jpg') no-repeat;
+     background-size: 100%;
+     width: 100%;
+}
+
+#header-title {
+    font-size: 10rem;
+    font-weight: bold;
+    text-shadow: 7px 7px 15px #333; 
+    color:white;
+    margin-left: 10px;
+}
+#header-sub-text
+{
+    font-size: 2.5rem;
+    color:white;
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 10px;
+}
