@@ -6,14 +6,15 @@ test.controller("AppCtrl",function ($http) {
 
     app.saveIngredient = function (newName,newDescription)
     {
-        $http.post("http://localhost:3000/add", {name:newName,description:newDescription}).success(function () {
+        $http.post("http://localhost:3000/ingredient", {name:newName,description:newDescription}).success(function () {
             loadIngredients();
         })
     }
     function loadIngredients() {
-        $http.get("http://localhost:3000/data/ingredients").success(function (ingredients) {
+        //app.ingredients = [{name:"hi",description:"bye"}];
+        $http.get('http://localhost:3000/ingredient').success(function (ingredients) {
             app.ingredients = ingredients;
-        })
+        }).error(function () { app.ingredients = [{name:"Faild to load ingredients"}]})
     }
     loadIngredients();
 })
