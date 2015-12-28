@@ -12,6 +12,15 @@
           </option>
           <option name="userDatabase" value="jetbrains" />
         </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="label" value="TeaMasterDB" />
+          <option name="serverUrls">
+            <list>
+              <option value="localhost:27017" />
+            </list>
+          </option>
+          <option name="userDatabase" value="TeaMasterDB" />
+        </ServerConfiguration>
       </list>
     </option>
     <option name="shellPath" value="C:\MongoDB\Server\3.2\bin\mongo.exe" />

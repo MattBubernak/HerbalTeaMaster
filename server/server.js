@@ -1,12 +1,31 @@
-var express = require('express');
 var mongoose = require("mongoose");
+var express = require('express');
 var cors = require("cors");
-mongoose.connect('mongodb://localhost/jetbrains');
+var _ = require("underscore"); //TODO: lodash??
 var bodyParser = require("body-parser");
+//var Ingredient = require('../models/Ingredient.js');
 
+// Connect to the database.
+mongoose.connect('mongodb://localhost/TeaMasterDB');
+
+
+
+
+// Load the routes
+var routes = require('../routes/routes');
 
 // The Application
 var app = express();
+
+// Load the models
+app.models = require('../models/index');
+
+// Loops through each of our routes, call the function for each, and pass the controller/route
+_.each(routes, function(controller,route) {
+    app.use(route, controller(app,route));
+});
+
+
 
 
 // Necessary Middleware for the REST API.
@@ -19,21 +38,14 @@ app.use(bodyParser()); // Allows for JSON parsing
 // MONGO DB STRUCTURES
 // ===================
 
-// Ingredient
-var ingredientSchema = new mongoose.Schema({
-    name: { type: String},
-    description: String
-});
-// This is the constructor used to instantiate an ingredient.
-var Ingredient = mongoose.model('Ingredient',ingredientSchema);
-
 // TODO: Add recipes.
 var recipeSchema = new mongoose.Schema({
 
 });
 var Recipe = mongoose.model('Recipe',recipeSchema);
 
-populateIngredientsDB();
+
+//populateIngredientsDB();
 
 
 function populateIngredientsDB(){
@@ -57,11 +69,13 @@ function populateRecipesDB(){
 
 }
 
+/*
 app.get("/",function(req,res){
     Ingredient.find(function (err,ingredients) {
         res.send(ingredients);
     })
 });
+*/
 
 
 

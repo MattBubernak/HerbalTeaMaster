@@ -11,7 +11,7 @@ test.controller("AppCtrl",function ($http) {
         })
     }
     function loadIngredients() {
-        $http.get("http://localhost:3000").success(function (ingredients) {
+        $http.get("http://localhost:3000/data/ingredients").success(function (ingredients) {
             app.ingredients = ingredients;
         })
     }
