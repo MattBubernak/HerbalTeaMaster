@@ -16,12 +16,12 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
         })
         .when('/ingredientList',{
             templateUrl: 'pages/ingredientList.html',
-            controller: 'MainController'
+            controller: 'IngredientController'
 
         })
         .when('/ingredientAdd',{
             templateUrl: 'pages/ingredientAdd.html',
-            controller: 'MainController'
+            controller: 'IngredientController'
 
         })
 

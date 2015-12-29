@@ -1,19 +1,16 @@
+<div ng-app="test" ng-controller="IngredientController as app">
 <h1>Create a new recipe!</h1>
 <form novalidate>
     Recipe Name:<br>
-    <input type="text" ng-model="newIngredient.name"><br>
+    <input type="text" ng-model="app.newName"/>
     Recipe Description:<br>
-    <input type="text" ng-model="newIngredient.description">
+    <input type="text" ng-model="app.newDescription"/>
     <br><br>
     <button ng-click="reset()">RESET</button>
-    <button ng-click="submit()">SUBMIT</button>
+    <button ng-click="app.saveIngredient(app.newName,app.newDescription)">Save Ingredient</button>
 </form>
-<div class="alert alert-success" role="alert" ng-show="showSuccess" style="margin-top:5px;">Your ingredient has been added! Thanks!</div>
 
-<input type="text" ng-model="app.newName"/>
-<input type="text" ng-model="app.newDescription"/>
-<button ng-click="app.saveIngredient(app.newName,app.newDescription)">Save Ingredient</button>
+    <div class="alert alert-danger" role="alert" ng-show="app.showFailed" style="margin-top:5px;">Your ingredient has not been added! Sorry.</div>
+<div class="alert alert-success" role="alert" ng-show="app.showSuccess" style="margin-top:5px;">Your ingredient has been added! Thanks!</div>
 
-{{ 2 + 2 }}
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-<script src="javascripts/app.js"></script>
+</div>
