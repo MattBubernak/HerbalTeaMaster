@@ -1,37 +1,50 @@
+//server.js
+
+
+// modules =================================================
 var mongoose = require("mongoose");
 var express = require('express');
 var cors = require("cors");
+var path = require( 'path' );
+var methodOverride = require('method-override');
+var bodyParser = require("body-parser");
+var _ = require("underscore"); //TODO: lodash??
 
-// The Application
+// application =============================================
 var app = express();
 
-// CORS support
-/*
-app.use(function(req,res,next){
-    res.header('Access-Control-Allow-Origin','*');
-    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers','Content-Type');
-    next();
-});
-*/
-var _ = require("underscore"); //TODO: lodash??
-var bodyParser = require("body-parser");
-//var Ingredient = require('../models/Ingredient.js');
-
+// configuration ===========================================
 // Connect to the database.
 mongoose.connect('mongodb://localhost/TeaMasterDB');
 
 
+// set the static file location
+//app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(express.static(__dirname + '/public'));
+//app.use(express.static(path.join( __dirname, 'public')));
+//app.use('/lib',express.static(__dirname + '/lib'));
+//app.use('/controllers', express.static(__dirname + '/controllers'));
 
+app.use(bodyParser.json());
 
-// Load the routes
+// parse application/vnd.api+json as json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
+app.use(methodOverride('X-HTTP-Method-Override'));
+
+// set the static files location /public/img will be /img for users
+app.use(express.static('c:/Users/socce/Documents/Github/HerbalTeaMaster/public'));
+
+// routes =============================================
 var routes = require('../routes/routes');
 
-
-
-// Load the models
+// models =============================================
 app.models = require('../models/index');
-
 
 // ===================
 // MIDDLEWARE
@@ -44,67 +57,54 @@ _.each(routes, function(controller,route) {
 
 // Necessary Middleware for the REST API.
 app.use(cors()); // Allows for Cross Origin R Something requests.
-app.use(bodyParser()); // Allows for JSON parsing
-
-// ===================
 
 
-// ===================
-// MONGO DB STRUCTURES
-// ===================
+// frontend routes =========================================================
+// route to handle all angular requests
 
-// TODO: Add recipes.
-var recipeSchema = new mongoose.Schema({
-
+app.get('/', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendfile('c:/Users/socce/Documents/Github/HerbalTeaMaster/public/index.html');
 });
-var Recipe = mongoose.model('Recipe',recipeSchema);
+
+app.listen(3000);
+
+// expose app
+exports = module.exports = app;
+
+
+
 
 
 //populateIngredientsDB();
 
 /*
-function populateIngredientsDB(){
-    var names = ['Hibiscus','Ginber','GreenTea','BlackTea','Chamomile','Cinnamon','Rose Pedals','Orange Peel'];
-    var descriptions = ["it's good","it's bad","tasty","fresh","not very good","just an OK ingredient","pretty awesome","very interesting flavor"];
-    for (i = 0; i < 8; i++)
-    {
-        //var tester = new app.models.ingredient.constructor({name:"hi"}) //({name:names[i],description:descriptions[i]});
-        tester.save(function(err) {
-            if(err) {
-                console.log('fialed');
-            }else{
-                console.log('saved');
-            }
-        });
-    }
-}
-*/
-
-// TODO: add default recipe population.
-function populateRecipesDB(){
-
-}
-
-/*
-app.get("/",function(req,res){
-    Ingredient.find(function (err,ingredients) {
-        res.send(ingredients);
-    })
-});
-*/
+ function populateIngredientsDB(){
+ var names = ['Hibiscus','Ginber','GreenTea','BlackTea','Chamomile','Cinnamon','Rose Pedals','Orange Peel'];
+ var descriptions = ["it's good","it's bad","tasty","fresh","not very good","just an OK ingredient","pretty awesome","very interesting flavor"];
+ for (i = 0; i < 8; i++)
+ {
+ //var tester = new app.models.ingredient.constructor({name:"hi"}) //({name:names[i],description:descriptions[i]});
+ tester.save(function(err) {
+ if(err) {
+ console.log('fialed');
+ }else{
+ console.log('saved');
+ }
+ });
+ }
+ }
+ */
 
 
-
-// ==============
-// GET ENDPOINTS
-// ==============
+// backend routes =========================================================
 
 // GET Endpoint for retrieving the recipes.
-app.get("/recipe",function(req,res){
-    Recipe.find(function (err,ingredients) {
-        res.send(ingredients);
-    })
-});
+//app.get("/recipe",function(req,res){
+//    Recipe.find(function (err,ingredients) {
+//        res.send(ingredients);
+//    })
+//});
 
 // GET Endpoint for retrieving the ingredients.
 //app.get("/ingredient",function(req,res){
@@ -114,20 +114,13 @@ app.get("/recipe",function(req,res){
 //});
 
 
-
-// ==============
-// POST ENDPOINTS
-// ==============
-
 // POST Endpoint for adding an ingredient.
-app.post("/add", function(req,res) {
-    var name = req.body.name;
-    var description = req.body.description;
-    var ingredient = new Ingredient({name:name,description:description});
-    ingredient.save(function (err) {
-        res.send();
-    })
-})
+//app.post("/add", function(req,res) {
+//    var name = req.body.name;
+//    var description = req.body.description;
+//    var ingredient = new Ingredient({name:name,description:description});
+//    ingredient.save(function (err) {
+//        res.send();
+//    })
+//})
 // POST Endpoint for adding an ingredient.
-
-app.listen(3000);
