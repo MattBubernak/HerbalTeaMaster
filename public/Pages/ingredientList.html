@@ -6,7 +6,7 @@
         <div class="panel panel-default" ng-repeat="ingredient in app.ingredients | filter:{name:app.nameSearchInput} | orderBy: 'name'" style="width:50%">
             <div class="panel-body">
                 <h3>{{ingredient.name}}</h3>
-                <img src="img/ingredient/placeholder.png" alt="..." height="100" width="100">
+                <img src="img/ingredient/{{ingredient.imageID}}" alt="..." height="100" width="100">
             </div>
             <div class="panel-footer"><p>{{ingredient.description}}</p></div>
         </div>

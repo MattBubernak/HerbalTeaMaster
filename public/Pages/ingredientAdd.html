@@ -1,13 +1,15 @@
 <div ng-app="test" ng-controller="IngredientController as app">
 <h1>Create a new recipe!</h1>
 <form novalidate>
-    Recipe Name:<br>
-    <input type="text" ng-model="app.newName"/>
-    Recipe Description:<br>
-    <input type="text" ng-model="app.newDescription"/>
+    Ingredient Name:<br>
+    <input type="text" ng-model="app.newName"/><br>
+    Ingredient Description:<br>
+    <input type="text" ng-model="app.newDescription"/><br>
+    Ingredient Image:<br>
+    <input type="text" ng-model="app.newImgID"/>
     <br><br>
     <button ng-click="reset()">RESET</button>
-    <button ng-click="app.saveIngredient(app.newName,app.newDescription)">Save Ingredient</button>
+    <button ng-click="app.saveIngredient(app.newName,app.newDescription,app.newImgID)">Save Ingredient</button>
 </form>
 
     <div class="alert alert-danger" role="alert" ng-show="app.showFailed" style="margin-top:5px;">Your ingredient has not been added! Sorry.</div>

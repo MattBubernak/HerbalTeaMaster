@@ -9,9 +9,9 @@ angular.module('IngredientCtrl', []).controller('IngredientController', function
     app.showFailed = false;
     app.nameSearchInput = "";
 
-    app.saveIngredient = function (newName,newDescription)
+    app.saveIngredient = function (newName,newDescription,newImgID)
     {
-        $http.post("http://localhost:3000/ingredient", {name:newName,description:newDescription}).success(function () {
+        $http.post("http://localhost:3000/ingredient", {name:newName,description:newDescription,imageID:newImgID}).success(function () {
             console.log("sent a new ingredient");
             app.showSuccess = true;
         }).error(function() {

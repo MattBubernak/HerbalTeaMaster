@@ -8,6 +8,12 @@ var cors = require("cors");
 var path = require( 'path' );
 var methodOverride = require('method-override');
 var bodyParser = require("body-parser");
+var passport = require('passport');
+var localStrategy = require('passport-local');
+var facebookStrategy = require('passport-facebook');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 var _ = require("underscore");
 
 // application =============================================
@@ -16,6 +22,33 @@ var app = express();
 
 // configuration ===========================================
 mongoose.connect('mongodb://localhost/TeaMasterDB');
+
+
+// passport configuration ==================================
+
+app.use(logger('combined'));
+app.use(cookieParser());
+app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+// Session-persisted message middleware
+app.use(function(req, res, next){
+    var err = req.session.error,
+        msg = req.session.notice,
+        success = req.session.success;
+
+    delete req.session.error;
+    delete req.session.success;
+    delete req.session.notice;
+
+    if (err) res.locals.error = err;
+    if (msg) res.locals.notice = msg;
+    if (success) res.locals.success = success;
+
+    next();
+});
+
+
 
 app.use(bodyParser.json());
 

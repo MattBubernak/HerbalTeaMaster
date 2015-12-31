@@ -24,7 +24,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             controller: 'IngredientController'
 
         })
+        .when('/userSignup',{
+            templateUrl: 'pages/userSignup.html',
+            controller: 'MainController'
 
+        })
     $locationProvider.html5Mode(true);
 
 }]);

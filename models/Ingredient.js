@@ -14,6 +14,7 @@ var IngredientSchema = new mongoose.Schema({
     },
     imageID: {
         type: String,
+        default: "Placeholder.png",
         required: false
     }
 });
