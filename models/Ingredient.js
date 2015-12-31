@@ -3,15 +3,16 @@
 //
 var mongoose = require("mongoose");
 
-
-// Ingredient Schema
-// Components: Title, Description
 var IngredientSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
     description: {
+        type: String,
+        required: false
+    },
+    imageID: {
         type: String,
         required: false
     }

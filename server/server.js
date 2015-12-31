@@ -8,23 +8,14 @@ var cors = require("cors");
 var path = require( 'path' );
 var methodOverride = require('method-override');
 var bodyParser = require("body-parser");
-var _ = require("underscore"); //TODO: lodash??
+var _ = require("underscore");
 
 // application =============================================
 var app = express();
 
+
 // configuration ===========================================
-// Connect to the database.
 mongoose.connect('mongodb://localhost/TeaMasterDB');
-
-
-// set the static file location
-//app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-//app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(express.static(__dirname + '/public'));
-//app.use(express.static(path.join( __dirname, 'public')));
-//app.use('/lib',express.static(__dirname + '/lib'));
-//app.use('/controllers', express.static(__dirname + '/controllers'));
 
 app.use(bodyParser.json());
 
@@ -38,17 +29,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 // set the static files location /public/img will be /img for users
+//app.use("/img/ingredient/",express.static('c:/Users/socce/Documents/Github/HerbalTeaMaster/public/img/ingredient'));
 app.use(express.static('c:/Users/socce/Documents/Github/HerbalTeaMaster/public'));
+
 
 // routes =============================================
 var routes = require('../routes/routes');
 
+
 // models =============================================
 app.models = require('../models/index');
 
-// ===================
-// MIDDLEWARE
-// ===================
+
+// MIDDLEWARE =========================================
 
 // Loops through each of our routes, call the function for each, and pass the controller/route
 _.each(routes, function(controller,route) {
@@ -62,7 +55,7 @@ app.use(cors()); // Allows for Cross Origin R Something requests.
 // frontend routes =========================================================
 // route to handle all angular requests
 
-app.get('/', function(req, res, next) {
+app.get('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
     res.sendfile('c:/Users/socce/Documents/Github/HerbalTeaMaster/public/index.html');
 });
