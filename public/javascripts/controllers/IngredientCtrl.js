@@ -7,6 +7,7 @@ angular.module('IngredientCtrl', []).controller('IngredientController', function
     var url = "http://localhost:3000";
     app.showSuccess = false;
     app.showFailed = false;
+    app.nameSearchInput = "";
 
     app.saveIngredient = function (newName,newDescription)
     {
