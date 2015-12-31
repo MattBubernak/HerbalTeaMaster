@@ -9,11 +9,6 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             templateUrl: 'pages/splash.html',
             controller: 'MainController'
         })
-        .when('/Recipes',{
-            templateUrl: 'pages/recipes.html',
-            controller: 'MainController'
-
-        })
         .when('/ingredientList',{
             templateUrl: 'pages/ingredientList.html',
             controller: 'IngredientController'
@@ -23,6 +18,14 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             templateUrl: 'pages/ingredientAdd.html',
             controller: 'IngredientController'
 
+        })
+        .when('/recipeList',{
+            templateUrl: 'pages/recipeList.html',
+            controller: 'RecipeController'
+        })
+        .when('/recipeAdd',{
+            templateUrl: 'pages/recipeAdd.html',
+            controller: 'RecipeController'
         })
         .when('/userSignup',{
             templateUrl: 'pages/userSignup.html',

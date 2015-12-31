@@ -4,7 +4,7 @@
 var mongoose = require("mongoose");
 
 var UserSchema = new mongoose.Schema({
-    username: {
+    userName: {
         type: String,
         required: true
     },
@@ -16,10 +16,14 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
+    firstName: {
         type: String,
         required: false
     },
+    lastName: {
+        type: String,
+        required: false
+    }
 });
 
 // Export it so that any modules that "require" Ingredient have access to it.

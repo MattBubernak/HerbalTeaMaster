@@ -1,0 +1,18 @@
+<div ng-app="test" ng-controller="RecipeController as app">
+    <h1>Create a new recipe!</h1>
+    <form novalidate>
+        Recipe Name:<br>
+        <input type="text" ng-model="app.newName"/><br>
+        Recipe Description:<br>
+        <input type="text" ng-model="app.newDescription"/><br>
+        Recipe Image:<br>
+        <input type="text" ng-model="app.newImgID"/>
+        <br><br>
+        <button ng-click="reset()">RESET</button>
+        <button ng-click="app.saveRecipe(app.newName,app.newDescription,app.newImgID)">Save Recipe</button>
+    </form>
+
+    <div class="alert alert-danger" role="alert" ng-show="app.showFailed" style="margin-top:5px;">Your recipe has not been added! Sorry.</div>
+    <div class="alert alert-success" role="alert" ng-show="app.showSuccess" style="margin-top:5px;">Your recipe has been added! Thanks!</div>
+
+</div>

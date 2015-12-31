@@ -3,5 +3,7 @@
  */
 
 module.exports = {
-    '/ingredient': require('../controllers/IngredientController')
+    '/ingredient': require('../controllers/IngredientController'),
+    '/recipe': require('../controllers/RecipeController'),
+    '/user': require('../controllers/UserController')
 }

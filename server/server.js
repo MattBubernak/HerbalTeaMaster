@@ -11,9 +11,10 @@ var bodyParser = require("body-parser");
 var passport = require('passport');
 var localStrategy = require('passport-local');
 var facebookStrategy = require('passport-facebook');
-var session = require('express-session');
+var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var flash = require('connect-flash');
 var _ = require("underscore");
 
 // application =============================================
@@ -26,28 +27,32 @@ mongoose.connect('mongodb://localhost/TeaMasterDB');
 
 // passport configuration ==================================
 
-app.use(logger('combined'));
-app.use(cookieParser());
-app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
-app.use(passport.initialize());
-app.use(passport.session());
-// Session-persisted message middleware
-app.use(function(req, res, next){
-    var err = req.session.error,
-        msg = req.session.notice,
-        success = req.session.success;
+// Configuring Passport
+//app.use(expressSession({secret: 'mySecretKey'}));
+//app.use(passport.initialize());
+//app.use(passport.session());
 
-    delete req.session.error;
-    delete req.session.success;
-    delete req.session.notice;
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+//var flash = require('connect-flash');
+//app.use(flash());
 
-    if (err) res.locals.error = err;
-    if (msg) res.locals.notice = msg;
-    if (success) res.locals.success = success;
+// Initialize Passport
+//var initPassport = require('../passport/init');
+//initPassport(passport);
 
-    next();
+
+/*
+passport.serializeUser(function(user, done) {
+    done(null, user._id);
 });
 
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
+*/
 
 
 app.use(bodyParser.json());
@@ -78,6 +83,7 @@ app.models = require('../models/index');
 
 // Loops through each of our routes, call the function for each, and pass the controller/route
 _.each(routes, function(controller,route) {
+    console.log("route for: " + route);
     app.use(route, controller(app,route));
 });
 
@@ -97,56 +103,3 @@ app.listen(3000);
 
 // expose app
 exports = module.exports = app;
-
-
-
-
-
-//populateIngredientsDB();
-
-/*
- function populateIngredientsDB(){
- var names = ['Hibiscus','Ginber','GreenTea','BlackTea','Chamomile','Cinnamon','Rose Pedals','Orange Peel'];
- var descriptions = ["it's good","it's bad","tasty","fresh","not very good","just an OK ingredient","pretty awesome","very interesting flavor"];
- for (i = 0; i < 8; i++)
- {
- //var tester = new app.models.ingredient.constructor({name:"hi"}) //({name:names[i],description:descriptions[i]});
- tester.save(function(err) {
- if(err) {
- console.log('fialed');
- }else{
- console.log('saved');
- }
- });
- }
- }
- */
-
-
-// backend routes =========================================================
-
-// GET Endpoint for retrieving the recipes.
-//app.get("/recipe",function(req,res){
-//    Recipe.find(function (err,ingredients) {
-//        res.send(ingredients);
-//    })
-//});
-
-// GET Endpoint for retrieving the ingredients.
-//app.get("/ingredient",function(req,res){
-//    app.models.ingredient.find(function (err,ingredients) {
-//        res.send(ingredients);
-//    })
-//});
-
-
-// POST Endpoint for adding an ingredient.
-//app.post("/add", function(req,res) {
-//    var name = req.body.name;
-//    var description = req.body.description;
-//    var ingredient = new Ingredient({name:name,description:description});
-//    ingredient.save(function (err) {
-//        res.send();
-//    })
-//})
-// POST Endpoint for adding an ingredient.

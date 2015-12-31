@@ -1,0 +1,19 @@
+<div ng-app="test" ng-controller="RecipeController as app">
+
+    <h1 style="text-align:left">Learn about the recipes</h1>
+    Search: <input ng-model="app.nameSearchInput" style="margin-bottom:20px">
+    <div>
+        <div class="panel panel-default" ng-repeat="recipe in app.recipes | filter:{name:app.nameSearchInput} | orderBy: 'name'" style="width:50%">
+            <div class="panel-body">
+                <h3>{{recipe.name}}</h3>
+                <img src="img/recipe/{{recipe.imageID}}" alt="..." height="100" width="100">
+                <br>Ingredients
+                <ul ng-repeat="y in recipe.ingredients">
+                    <li>{{y}}</li>
+                </ul>
+            </div>
+            <div class="panel-footer"><p>{{ingredient.description}}</p></div>
+        </div>
+    </div>
+
+</div>
