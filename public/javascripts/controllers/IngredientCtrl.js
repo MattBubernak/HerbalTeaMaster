@@ -1,13 +1,25 @@
 /**
  * Created by socce on 12/28/2015.
  */
-angular.module('IngredientCtrl', []).controller('IngredientController', function($scope,$http) {
+angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope','DatabaseService', function($scope,DatabaseService) {
 
     var app = this;
     var url = "http://localhost:3000";
     app.showSuccess = false;
     app.showFailed = false;
     app.nameSearchInput = "";
+    app.ingredients = [];
+
+    app.loadIngredients = function ()
+    {
+        var ingredientsPromise = DatabaseService.getIngredients();
+        ingredientsPromise.then(function (data) {
+                app.ingredients = data;
+            }, function (error) {
+                app.ingredients = []
+            }
+        )
+    }
 
     app.saveIngredient = function (newName,newDescription,newImgID)
     {
@@ -18,11 +30,7 @@ angular.module('IngredientCtrl', []).controller('IngredientController', function
             app.showFailed = true;
         })
     }
-    function loadIngredients() {
-        $http.get('http://localhost:3000/ingredient').success(function (ingredients) {
-            app.ingredients = ingredients;
-        }).error(function () { app.ingredients = [{name:"Faild to load ingredients"}]})
-    }
-    loadIngredients();
 
-});
+    app.loadIngredients();
+
+}]);
