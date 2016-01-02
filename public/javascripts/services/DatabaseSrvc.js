@@ -12,10 +12,10 @@ angular.module('DatabaseSrvc', []).service('DatabaseService', function($http,$q)
         $http.get('http://localhost:3000/ingredient').then(function (data)
         {
             //ingredientsData = data.data;
-            for (i = 0; i < data.data.length; i++)
-            {
-                data.data[i].owned = false;
-            }
+            //for (i = 0; i < data.data.length; i++)
+            //{
+            //    data.data[i].owned = false;
+           // }
             ingredientsData.resolve(data.data);
         })
         $http.get('http://localhost:3000/recipe').then(function (data)
@@ -26,7 +26,6 @@ angular.module('DatabaseSrvc', []).service('DatabaseService', function($http,$q)
 
     this.getIngredients = function ()
     {
-        console.log('called');
         return ingredientsData.promise
     }
 
