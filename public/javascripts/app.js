@@ -6,4 +6,4 @@
 // ReicpeCtrl: used for recipe related views.
 // MainCtrl: not currently used.
 
-var myApp = angular.module("myApp",['ngRoute','DatabaseSrvc','appRoutes','IngredientCtrl','MainCtrl','RecipeCtrl']);
+var myApp = angular.module("myApp",['ngRoute','DatabaseSrvc','appRoutes','IngredientCtrl','MainCtrl','RecipeCtrl','ngFileUpload']);

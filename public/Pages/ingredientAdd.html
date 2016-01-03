@@ -6,10 +6,15 @@
     Ingredient Description:<br>
     <input type="text" ng-model="app.newDescription"/><br>
     Ingredient Image:<br>
+    <input type="file" ng-model="app.newImg"/>
     <input type="text" ng-model="app.newImgID"/>
     <br><br>
     <button ng-click="reset()">RESET</button>
-    <button ng-click="app.saveIngredient(app.newName,app.newDescription,app.newImgID)">Save Ingredient</button>
+    <div class="button" ngf-select ng-model="app.file" name="file" ngf-pattern="'image/*'"
+         ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+         ngf-resize="{width: 100, height: 100}">Select</div>
+    {{ 1 + 2 }} {{ $file }}
+    <button ng-click="app.saveIngredient(app.newName,app.newDescription,app.newImgID,file)">Save Ingredient</button>
 </form>
 
     <div class="alert alert-danger" role="alert" ng-show="app.showFailed" style="margin-top:5px;">Your ingredient has not been added! Sorry.</div>

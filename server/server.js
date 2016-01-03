@@ -8,7 +8,8 @@ var cors = require("cors");
 var path = require( 'path' );
 var methodOverride = require('method-override');
 var bodyParser = require("body-parser");
-var passport = require('passport');
+var passport = require('passport'); // middleware for user auth
+var multer = require('multer'); // middleware for file upload
 var localStrategy = require('passport-local');
 var facebookStrategy = require('passport-facebook');
 var expressSession = require('express-session');
@@ -53,6 +54,8 @@ passport.deserializeUser(function(id, done) {
     });
 });
 */
+var upload = multer({ dest: 'uploads/' });
+
 
 
 app.use(bodyParser.json());
@@ -89,6 +92,14 @@ _.each(routes, function(controller,route) {
 
 // Necessary Middleware for the REST API.
 app.use(cors()); // Allows for Cross Origin R Something requests.
+
+
+app.post('/upload',multer({ dest: './uploads/'}).single('upl'), function(req, res) {
+    console.log('hit2');
+    console.log(req.body); //form fields
+    console.log(req.file); //form fields
+})
+
 
 
 // frontend routes =========================================================
