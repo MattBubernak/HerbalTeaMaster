@@ -11,8 +11,9 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
     app.ingredients = [];
 
     $scope.file;
-    $scope.ingredientName = "Name";
-    $scope.ingredientDescription = "None";
+    $scope.ingredientName = "";
+    $scope.ingredientDescription = "";
+    $scope.ingredientImageID = "";
 
     app.loadIngredients = function ()
     {
@@ -33,12 +34,15 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
         else {
             console.log($scope.file);
         }
+        console.log("file name: " + $scope.file.name);
+        $scope.ingredientImageID = $scope.file.name;
+        app.saveIngredient();
     };
 
     // upload on file select or drop
     $scope.upload = function (file) {
         Upload.upload({
-            url: '/upload',
+            url: '/uploadIngredient',
             method: 'POST',
             arrayKey: '',
             data: {},
@@ -54,23 +58,10 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
         });
     };
 
-    app.saveIngredient = function (newName,newDescription,newImgID,file)
+    app.saveIngredient = function()
     {
-        // TODO: Upload image(if provided)
-        console.log("file:" + file);
-
-        Upload.upload({
-            url: '/upload',
-            file: $scope.file
-        }).success(function (response, status) {
-                console.log('made it');
-            }
-        ).error(function (err) {
-                console.log('didnt make it');
-            }
-        );
         // Upload ingredient
-        $http.post("http://localhost:3000/ingredient", {name:newName,description:newDescription,imageID:newImgID}).success(function () {
+        $http.post("http://localhost:3000/ingredient", {name:$scope.ingredientName,description:$scope.ingredientDescription,imageID:$scope.ingredientImageID}).success(function () {
             console.log("sent a new ingredient");
             app.showSuccess = true;
         }).error(function() {
