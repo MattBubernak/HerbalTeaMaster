@@ -60,14 +60,8 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
         console.log("file:" + file);
 
         Upload.upload({
-            url: '/upload', //upload.php script, node.js route, etc..
-           // method: 'POST', //Post or Put
-            //headers: {'Content-Type': 'multipart/form-data'},
+            url: '/upload',
             file: $scope.file
-            //data: {file:file}
-            //data: JsonObject, //from data to send along with the file
-            //file: blob, // or list of files ($files) for html5 only
-            //fileName: 'photo' // to modify the name of the file(s)
         }).success(function (response, status) {
                 console.log('made it');
             }
