@@ -1,21 +1,22 @@
 <div ng-app="test" ng-controller="IngredientController as app">
 <h1>Create a new ingredient!</h1>
-<form novalidate>
+    <div class="button" name = "upl" ngf-select="upload($file)">Upload on file select</div>
+
+    <form enctype="multipart/form-data">
     Ingredient Name:<br>
-    <input type="text" ng-model="app.newName"/><br>
+    <input type="text" ng-model="ingredientName"/><br>
     Ingredient Description:<br>
-    <input type="text" ng-model="app.newDescription"/><br>
-    Ingredient Image:<br>
-    <input type="file" ng-model="app.newImg"/>
-    <input type="text" ng-model="app.newImgID"/>
-    <br><br>
-    <button ng-click="reset()">RESET</button>
-    <div class="button" ngf-select ng-model="app.file" name="file" ngf-pattern="'image/*'"
+    <input type="text" ng-model="ingredientDescription"/><br>
+    Ingredient Image:
+    <div class="button" ngf-select ng-model="file" name="upl" ngf-pattern="'image/*'"
          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
          ngf-resize="{width: 100, height: 100}">Select</div>
-    {{ 1 + 2 }} {{ $file }}
-    <button ng-click="app.saveIngredient(app.newName,app.newDescription,app.newImgID,file)">Save Ingredient</button>
-</form>
+    Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+    <button ng-click="submit()">Save Ingredient</button>
+        <button ng-click="reset()">RESET</button>
+
+    </form>
+
 
     <div class="alert alert-danger" role="alert" ng-show="app.showFailed" style="margin-top:5px;">Your ingredient has not been added! Sorry.</div>
 <div class="alert alert-success" role="alert" ng-show="app.showSuccess" style="margin-top:5px;">Your ingredient has been added! Thanks!</div>

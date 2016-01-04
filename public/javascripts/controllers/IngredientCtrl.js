@@ -9,7 +9,10 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
     app.showFailed = false;
     app.nameSearchInput = "";
     app.ingredients = [];
-    app.file;
+
+    $scope.file;
+    $scope.ingredientName = "Name";
+    $scope.ingredientDescription = "None";
 
     app.loadIngredients = function ()
     {
@@ -22,6 +25,35 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
         )
     }
 
+    $scope.submit = function() {
+        if ($scope.file) {
+            console.log($scope.file);
+            $scope.upload($scope.file);
+        }
+        else {
+            console.log($scope.file);
+        }
+    };
+
+    // upload on file select or drop
+    $scope.upload = function (file) {
+        Upload.upload({
+            url: '/upload',
+            method: 'POST',
+            arrayKey: '',
+            data: {},
+            file: file,
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(function (resp) {
+            console.log('Success. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ');
+        });
+    };
+
     app.saveIngredient = function (newName,newDescription,newImgID,file)
     {
         // TODO: Upload image(if provided)
@@ -29,9 +61,10 @@ angular.module('IngredientCtrl', []).controller('IngredientController', ['$scope
 
         Upload.upload({
             url: '/upload', //upload.php script, node.js route, etc..
-            method: 'POST', //Post or Put
-            headers: {'Content-Type': 'multipart/form-data'},
-            data: {file:file}
+           // method: 'POST', //Post or Put
+            //headers: {'Content-Type': 'multipart/form-data'},
+            file: $scope.file
+            //data: {file:file}
             //data: JsonObject, //from data to send along with the file
             //file: blob, // or list of files ($files) for html5 only
             //fileName: 'photo' // to modify the name of the file(s)
