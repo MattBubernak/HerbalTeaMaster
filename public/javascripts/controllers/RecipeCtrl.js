@@ -15,7 +15,14 @@ angular.module('RecipeCtrl', []).controller('RecipeController',['$scope','$http'
 
      app.saveRecipe = function (newName,newDescription,newImgID)
      {
-     $http.post("http://localhost:3000/recipe", {name:newName,description:newDescription,imageID:newImgID,ingredients:['56847f1b79f107382293a6d7','56847fb61279dcac10e4e3dd']}).success(function () {
+         ingredList = [];
+         for (var i = 0; i < app.ingredients.length; i++)
+         {
+             if (app.ingredients[i].selected) {
+                 ingredList.push(app.ingredients[i]._id);
+             }
+         }
+     $http.post("http://localhost:3000/recipe", {name:newName,description:newDescription,imageID:newImgID,ingredients:ingredList}).success(function () {
                console.log("sent a new recipe");
                app.showSuccess = true;
           }).error(function() {
@@ -29,6 +36,11 @@ angular.module('RecipeCtrl', []).controller('RecipeController',['$scope','$http'
 
           ingredientsPromise.then(function (data) {
                    app.ingredients = data;
+                   // Update the ingredients list ot have a "selected" for field.
+                   for (var i = 0; i < app.ingredients.length; i++)
+                   {
+                       app.ingredients[i].selected = false;
+                   }
               }, function (error) {
                    app.ingredients = []
               }

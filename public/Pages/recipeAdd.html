@@ -8,6 +8,28 @@
         Recipe Image:<br>
         <input type="text" ng-model="app.newImgID"/>
         <br><br>
+        What ingredients are in the recipe?<br>
+        Search: <input ng-model="app.nameSearchInput" style="margin-bottom:20px">
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="control-group" ng-repeat="ingredient in app.ingredients | filter:{name:app.nameSearchInput} | limitTo:5">
+                        <div class="col-md-2">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3>{{ingredient.name}}</h3>
+                                    <img src="img/ingredient/{{ingredient.imageID}}" alt="..." height="100" width="100">
+                                    <input type="checkbox" ng-model="ingredient.selected">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
         <button ng-click="reset()">RESET</button>
         <button ng-click="app.saveRecipe(app.newName,app.newDescription,app.newImgID)">Save Recipe</button>
     </form>
